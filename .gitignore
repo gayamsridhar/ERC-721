@@ -1,0 +1,14 @@
+node_modules
+.env
+coverage
+coverage.json
+typechain
+Yash-KGF-Danger-Board.webp
+
+#Hardhat files
+cache
+artifacts
+.env.example
+typechain-types
+frontend
+metadata
