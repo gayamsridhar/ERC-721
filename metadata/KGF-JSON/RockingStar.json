@@ -1,0 +1,22 @@
+{
+    "name" : "RockingStar",
+    "description": "He is one of the most successful and highest-paid actors in the Kannada film industry",
+    "image" : "https://ipfs.io/ipfs/QmZmiynTcYr97PMgcvMnGoMFUJ8tyNabd292v6zCJYs1F2/Yash-KGF-RockingStar.PNG",
+    "attributes": [
+        {
+            "trait_type": "Rocking",
+            "value": 10,
+            "max_value": 10
+        },
+        {
+            "trait_type": "Acting",
+            "value": 10,
+            "max_value": 10
+        },
+        {
+            "trait_type": "Style",
+            "value": 10,
+            "max_value": 10
+        }
+    ]
+}

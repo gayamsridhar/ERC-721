@@ -11,4 +11,5 @@ artifacts
 .env.example
 typechain-types
 frontend
-metadata
+backup
+js

@@ -1,0 +1,22 @@
+{
+    "name" : "Toofan",
+    "description": "Waves Have Risen In The Ocean This Fierce Hurricane Mountains.Move Out Of The Way.",
+    "image" : "https://ipfs.io/ipfs/QmZmiynTcYr97PMgcvMnGoMFUJ8tyNabd292v6zCJYs1F2/Yash-KGF-Toofan.PNG",
+    "attributes": [
+        {
+            "trait_type": "Voilence",
+            "value": 10,
+            "max_value": 10
+        },       
+        {
+            "trait_type": "Power",
+            "value": 10,
+            "max_value": 10
+        },
+        {
+            "trait_type": "Speed",
+            "value": 10,
+            "max_value": 10
+        }
+    ]
+}

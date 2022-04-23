@@ -75,5 +75,22 @@ describe("KGFTokens", function () {
         console.log("Owner of token-1 :"+owenr1);
 
       });
+
+      it('Mint : UserOne: without whitelist', async () => {
+        const tokenURI = 'https://ipfs.io/ipfs/QmNNPkcVbpzuAxzzb1FSFFA5p8ezqTuJUNKBExqykVD49y/Adheera.json';
+         await expect(
+          NFTInstance.connect(userOne).mint(tokenURI)
+        ).to.be.revertedWith("not whitelist memebr");
+      });
+
+      it('Mint : UserOne: with whitelist', async () => {
+        const tokenURI = 'https://ipfs.io/ipfs/QmNNPkcVbpzuAxzzb1FSFFA5p8ezqTuJUNKBExqykVD49y/Adheera.json';
+        await NFTInstance.addToWhiteList(userOne.address);
+        await NFTInstance.connect(userOne).mint(tokenURI);
+
+        const owenr1 = await NFTInstance.ownerOf(1);
+        expect(owenr1).to.equal(userOne.address);
+        console.log("Owner of token-1 :"+owenr1);
+      });
 });
 
