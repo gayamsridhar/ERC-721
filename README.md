@@ -11,6 +11,6 @@ Run command – ‘npm run start’ inside web3-app folder (ERC-721\web3-app) to
 
 Connect your metamask to Polygon testnet
 
-Click on Connect Metamask to Before clicking on Mint, add your testing address in the whitelist (I haven’t added any validity conditions)
+In React-App: Click on 'Connect Metamask', add your testing address in the whitelist (I haven’t added any validity conditions)
 
-Use the Mint to mint the NFT.
+Use the Mint button to mint the NFT.
