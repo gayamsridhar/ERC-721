@@ -1,7 +1,7 @@
 //import Web3 from 'web3';
 
 import Web3 from "web3";
-import KGFTokenArtifacts from './artifacts/contracts/KGFTokens.sol/KGFTokens.json';
+import KGFTokenArtifacts from './abi/contracts/KGFTokens.sol/KGFTokens.json';
 
 let selectedAccount;
 let newChain;
