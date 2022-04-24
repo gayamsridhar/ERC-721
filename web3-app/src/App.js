@@ -4,28 +4,32 @@ import React, {useEffect,useState } from 'react'
 import { init, getOwnBalance, getOwner, mintToken, addToWhiteList, getWhiteListStatus } from './Web3Client.js';
 //const axios = require('axios');
 import  'bulma/css/bulma.css'
+import './app.css' ;
+import AdeeraImage from './KGF-Images/Sanjay-KGF-Adheera.PNG' ;
+import RockingStarImage from './KGF-Images/Yash-KGF-RockingStar.PNG' ;
+let imgs = [
+  "https://ipfs.io/ipfs/QmZmiynTcYr97PMgcvMnGoMFUJ8tyNabd292v6zCJYs1F2/Sanjay-KGF-Adheera.PNG",
+  "https://ipfs.io/ipfs/QmZmiynTcYr97PMgcvMnGoMFUJ8tyNabd292v6zCJYs1F2/Yash-KGF-RockingStar.PNG"
+];
 
 
 function App() {
 
-const [balance, setBalance] = useState(0);
-const [owner, setOwner] = useState(0);
+const [balance, setBalance] = useState("-");
+const [Owner, setOwner] = useState("-");
 const [minted, setMinted] = useState(false);
 const [whiteListed, setwhiteListed] = useState(false);
-const [whiteListStatus, setwhiteListStatus] = useState(false);
+const [whiteListStatus, setwhiteListStatus] = useState("-");
 const [Connected, setConnected] = useState("Connect Metamask");
-let imgs = [
-  'https://ipfs.io/ipfs/QmZmiynTcYr97PMgcvMnGoMFUJ8tyNabd292v6zCJYs1F2/Yash-KGF-Toofan.PNG',
-];
-    // useEffect( () => { 
-    //   //init();
-    //   //tokenName();
-    //   // ownerOf();
-    // }, [])
-
-    const fetchBalance = () => {
+const [balanceAddress, setbalanceAddress] = useState("-");
+const [whiteListAddress, setwhiteListAddress] = useState("-");
+const [add2whiteListAddress, setadd2whiteListAddress] = useState("-");
+const [tokenNo, settokenNo] = useState("-");
+const RockingStar = "https://ipfs.io/ipfs/Qmc886HxbY4pKPagX9PcXrWsAF8Zxta8PtH38ycMjQJjV8/RockingStar.json";
+const Adheera = "https://ipfs.io/ipfs/Qmc886HxbY4pKPagX9PcXrWsAF8Zxta8PtH38ycMjQJjV8/Adheera.json";
+    const fetchBalance = (account) => {
       console.log("@fetchBalance")
-      getOwnBalance()
+      getOwnBalance(account)
         .then((balance) => {
           setBalance(balance);
         })
@@ -45,31 +49,36 @@ let imgs = [
         });
     };
 
-    const fetchOwner = () => {
+    const fetchOwner = (tokenNo) => {
       console.log("@fetchOwner")
-      getOwner()
+      getOwner(tokenNo)
         .then((result) => {
           setOwner(result);
         })
         .catch((err) => {
           console.log(err);
+          setOwner(err.message);
         });
     };
 
-    const fetchWhiteListStatus = () => {
+    const fetchWhiteListStatus = (whiteListAddr) => {
       console.log("@getWhiteListStatus");
-      getWhiteListStatus()
-        .then((result) => {
-          setwhiteListStatus(result);
-          console.log("WhiteListStatus",whiteListStatus);
+      getWhiteListStatus(whiteListAddr)
+        .then((result) => {          
+          if(result){
+            setwhiteListStatus("White-Listed");
+          }
+          else{
+            setwhiteListStatus("Not White-Listed");
+          }
         })
         .catch((err) => {
           console.log(err);
         });
     };
 
-    const mint = () => {
-          mintToken()
+    const mint = (uri) => {
+          mintToken(uri)
             .then((tx) => {
               console.log(tx);
               setMinted(true);
@@ -78,8 +87,8 @@ let imgs = [
               console.log(err);
             });
 	  };
-    const add2WhiteList = () => {
-      addToWhiteList()
+    const add2WhiteList = (addr) => {
+      addToWhiteList(addr)
         .then((tx) => {
           console.log(tx);
           setwhiteListed(true);
@@ -89,29 +98,83 @@ let imgs = [
         });
     };
 
+    const handleBalanceAddress = (evt) =>{
+      setbalanceAddress(evt.target.value);
+    };
+    const handleWhiteListAddress = (evt) =>{
+      setwhiteListAddress(evt.target.value);
+    };
+    const handleAdd2WhiteListAddress = (evt) =>{
+      setadd2whiteListAddress(evt.target.value);
+    };
+    const handleTokenNo = (evt) =>{
+      settokenNo(evt.target.value);
+    };
+
   return (
     <div className="App">
-        <div className='Token Owner'>
-          <nav className="navbar">
-            <div className="constainer">
-              <div className='="navbar-brand"'>
-                <h1>ERC-721 NFT Mint</h1>
-              </div>
-              <div className='="navbar-start"'>
-                <button onClick={connectMM}className='button is-primary'>{Connected}</button>
-              </div>
-            </div>
+          <nav className="navbar">            
+                  <div className ="navbar-right">
+                    <h1 className='navbar-item'>ERC-721 NFT Mint</h1>
+                  </div> 
           </nav>
-          <p>Your balance is {balance}</p>
-          <button onClick={() => fetchBalance()}className='button is-primary'>Refresh balance</button>
-          <p>WhiteList Status is {whiteListStatus}</p>
-          <button onClick={() => fetchWhiteListStatus()}>get WhiteListStatus</button>   
+          <div className = "navbar-menu">
+                <button onClick={connectMM}className='button is-primary is-rounded'>{Connected}</button>
+          </div>
+          <div className='sidebar'>
+              <button onClick={() => fetchBalance(balanceAddress)}className='button is-primary is-right is-rounded'>
+                Get Balance
+              </button>
+              <input  type="text" placeholder='Your Address' 
+                onChange={evt => handleBalanceAddress(evt)}>
+              </input>
+              <div>
+              <p>Balance is : {balance}</p>
+              </div>
+          </div>
+          <div className='sidebar'>
+              <button onClick={() => fetchWhiteListStatus(whiteListAddress)}className='button is-primary is-right is-rounded'>
+                Get WhiteList Status
+              </button>
+              <input  type="text" placeholder='Your Address' 
+                onChange={evt => handleWhiteListAddress(evt)}>
+              </input>
+              <div>
+              <p>WhiteList Status is :  {whiteListStatus}</p>
+              </div>
+          </div>
+          <div className='sidebar'>
+              <button onClick={() => add2WhiteList(add2whiteListAddress)}className='button is-primary is-right is-rounded'>
+                Add 2 WhiteList
+              </button>
+              <input  type="text" placeholder='Your Address' 
+                onChange={evt => handleAdd2WhiteListAddress(evt)}>
+              </input>
+              <div>
+              <p> {add2whiteListAddress} will be added to Whitelist</p>
+              </div>
+          </div>
+          <div className='sidebar'>
+              <button onClick={() => fetchOwner(tokenNo)}className='button is-primary is-right is-rounded'>
+              getOwner
+              </button>
+              <input  type="text" placeholder='Token #' 
+                onChange={evt => handleTokenNo(evt)}>
+              </input>
+              <div>
+              <p> Owner of token # { tokenNo } is { Owner }</p>
+              </div>
+          </div>
+          <div>
+            <img src={AdeeraImage} height={200} width={200}/>
+          </div>
           {!minted ? (
-          <button onClick={() => mint()}>Mint token</button>
+          <button onClick={() => mint(Adheera)}className='button is-primary is-right is-rounded'>
+           Mint
+          </button>
           ) : (
           <p>Token minted successfully!</p>
           )}
-        </div>
     </div>
   );
 }

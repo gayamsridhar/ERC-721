@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.4;
+    pragma solidity ^0.8.4;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
@@ -36,7 +36,7 @@ contract KGFTokens is ERC721URIStorage {
         public
         returns (bool)
     {
-        require(msg.sender == owner, "not a owner");
+        //require(msg.sender == owner, "not a owner");
         whiteList[member] = true;
         return whiteList[member];
     }

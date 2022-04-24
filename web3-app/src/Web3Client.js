@@ -38,50 +38,50 @@ export const init = async () => {
 	 //console.log('contract Name from artifcats:', KGFTokenArtifacts.contractName);
 	 KGFTokenContract = new web3.eth.Contract(
 		KGFTokenArtifacts.abi,
-		'0xf56a9F1420B09d0Ee4c5c90e2312609fD27299bE'
+		'0x43814690e1A79300b680cD84D37bf226e4EFcE96'
 	 );	 
 	 isInitialized = true;
 	 return isInitialized;
 }
 
-export const getOwner = async () => {
+export const getOwner = async (tokenNo) => {
 	if (!isInitialized) {
 		await init();
 	}
-	return KGFTokenContract.methods.ownerOf(1).call();
-};
-export const getOwnBalance = async () => {
-	if (!isInitialized) {
-		await init();
-	}
-	return KGFTokenContract.methods.balanceOf(selectedAccount).call();
+	return KGFTokenContract.methods.ownerOf(tokenNo).call();	
 };
 
-export const mintToken = async () => {
+export const getOwnBalance = async (account) => {
 	if (!isInitialized) {
 		await init();
 	}
+	return KGFTokenContract.methods.balanceOf(account).call();
+};
+
+export const mintToken = async (uri) => {
+	if (!isInitialized) {
+		await init();
+	}
+	console.log(uri);
 	return KGFTokenContract.methods
-	.mint("https://ipfs.io/ipfs/QmNoanNDrKZ9NyBL5HtDipYsn821PS5Z3XYuV9iTuuxVVi")
+	.mint(uri)
 	.send({ from: selectedAccount });
 };
 
-export const addToWhiteList = async () => {
+export const addToWhiteList = async (addr) => {
 	if (!isInitialized) {
 		await init();
-	}
-	const addr = '0x38805F72EbcAfB924e8b5cED9F8D575Fe8039E0e';
+	}	
 	return KGFTokenContract.methods
 	.addToWhiteList(addr)
 	.send({ from: selectedAccount });
 };
 
-export const getWhiteListStatus = async () => {
+export const getWhiteListStatus = async (whiteListAddr) => {
 	if (!isInitialized) {
 		await init();
 	}
-	const addr = '0x38805F72EbcAfB924e8b5cED9F8D575Fe8039E0e';
-	console.log(KGFTokenContract.methods.whiteList(addr).call());
-	return KGFTokenContract.methods.whiteList(addr).call();
+	console.log(KGFTokenContract.methods.whiteList(whiteListAddr).call());
+	return KGFTokenContract.methods.whiteList(whiteListAddr).call();
 };
 
